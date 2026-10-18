@@ -1,0 +1,28 @@
+# Maintainer: kud3n013 <kud3n.013@proton.me>
+# Reference PKGBUILD used by CI. The archrepo recipe downloads the release asset instead.
+pkgname=steam-globalmenu
+pkgver=1.2.0
+pkgrel=1
+pkgdesc="High-performance, lightweight C daemon exporting Steam client menu bar to KDE Plasma Global Menu via DBusMenu"
+arch=('x86_64')
+url="https://github.com/kud3n013/steam-dbusmenu-export"
+license=('MIT')
+depends=('glib2' 'libdbusmenu-glib' 'libx11')
+makedepends=('gcc' 'make' 'pkgconf')
+optdepends=(
+  'steam: Valve Steam game client'
+  'millennium: Steam Client modding framework for custom CSS theme injection'
+)
+options=(!debug)
+source=("steam-dbusmenu-export-${pkgver}.tar.gz")
+sha256sums=('SKIP') # local tarball produced by CI with git archive
+
+build() {
+  cd "steam-dbusmenu-export-${pkgver}"
+  make
+}
+
+package() {
+  cd "steam-dbusmenu-export-${pkgver}"
+  make DESTDIR="$pkgdir" PREFIX=/usr install
+}
