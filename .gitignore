@@ -1,0 +1,5 @@
+/steam-globalmenu
+*.pkg.tar.*
+*.tar.gz
+packaging/arch/src/
+packaging/arch/pkg/
